@@ -11,8 +11,6 @@ const Article = connention.define('article', {
 })
 
 connention.sync().then(() => {
-  Article.create({
-    title: 'This is a title!',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo unde, vel ad inventore ex maiores id aliquid obcaecati, officia maxime ducimus. Cupiditate asperiores assumenda accusantium libero eligendi ducimus et ut.'
-  })
+  Article.findAll()
+         .then(articles => console.log(articles.length))
 })
