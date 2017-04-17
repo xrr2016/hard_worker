@@ -6,11 +6,28 @@ const connention = new Sequelize('demo_schema', 'root', 'root', {
 })
 
 const Article = connention.define('article', {
-  title: Sequelize.STRING,
-  body: Sequelize.TEXT
+  slug: {
+    type: Sequelize.STRING,
+    primaryKey: true
+  },
+  title: {
+    type: Sequelize.STRING,
+    unique: true,
+    allowNull: false
+  },
+  body: {
+    type: Sequelize.TEXT,
+    // defaultValue: 'Coming soon...'
+  }
+}, {
+  timestamps: false,
+  // freezeTableName: true
 })
 
-connention.sync().then(() => {
-  Article.findAll()
-         .then(articles => console.log(articles.length))
+connention.sync({
+  force: true,
+  logging: console.log
+}).then(() => {
+  // Article.findAll()
+  //        .then(articles => console.log(articles.length))
 })
