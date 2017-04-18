@@ -1,3 +1,3 @@
-## koa2-mysql
+## sequelize-mysql
 
 learning MySql
