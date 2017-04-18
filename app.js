@@ -24,18 +24,33 @@ const Article = connention.define('article', {
   body: {
     type: Sequelize.TEXT,
     // defaultValue: 'Coming soon...'
-    validate: {
-      customValidate: function(value) {
-        const firstChar = value.charAt(0)
-        if (firstChar !== 'X') {
-          throw new Error('title first char must be "X"')
-        }
-      }
-    }
+    // validate: {
+    //   customValidate: function(value) {
+    //     const firstChar = value.charAt(0)
+    //     if (firstChar !== 'X') {
+    //       throw new Error('title first char must be "X"')
+    //     }
+    //   }
+    // }
   }
 }, {
-  timestamps: false,
+  force: true,
+  // timestamps: false,
   // freezeTableName: true
+  hooks: {
+    beforeValidate: function() {
+      console.log('beforeValidate')
+    },
+    afterValidate: function() {
+      console.log('afterValidate')
+    },
+    beforeCreate: function() {
+      console.log('beforeCreate')
+    },
+    afterCreate: function(res) {
+      console.log('afterCreate: article is create', res)
+    }
+  }
 })
 
 connention
@@ -44,12 +59,12 @@ connention
     logging: console.log
   }).then(() => {
     return Article.create({
-        title: 'Xoooooooooooo',
-        slug: 'test',
+        title: 'some-title',
+        slug: 'some-slug',
         body: 'X Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, deserunt accusantium aliquam sed fugit illum ad modi magni, at obcaecati dolore quibusdam numquam iste sunt pariatur harum nulla minima molestiae!'
       })
       .then(articles => console.log(articles.length))
   })
   .catch(err => {
-    console.log(err)
+    // console.log(err)
   })
